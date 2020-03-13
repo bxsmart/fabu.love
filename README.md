@@ -47,7 +47,7 @@ demo地址: https://fabu.apppills.com/
 运行前准备
 
 * 安装 MongoDB (3.6)
-* 安装 Nodejs
+* 安装 Nodejs (v10.19.0)
 * 安装 pm2、babel-node
 
 ```bash
