@@ -155,6 +155,11 @@
         } else {
           const a = document.createElement('a')
           let url = `${this.axios.defaults.baseURL}${this.appVersionInfo.downloadUrl}`
+          if (this.appVersionInfo.downloadUrl.indexOf('https://', 0, 9) >= 0 ||
+             (this.appVersionInfo.downloadUrl.indexOf('http://', 0, 9) >= 0)) {
+            url = this.appVersionInfo.downloadUrl
+          }
+
           a.setAttribute('href', url)
           a.click()
           let _this = this

@@ -291,12 +291,13 @@ function parseApk(filename)  {
             var label = undefined
 
             if(result.application && result.application.label && result.application.label.length > 0) {
-                label = result.application.label[0]
+                label = result.application.label
             }
 
             if (label) {
                 label = label.replace(/'/g, '')
             }
+
             var appName = (result['application-label'] || result['application-label-zh-CN'] || result['application-label-es-US'] ||
             result['application-label-zh_CN'] || result['application-label-es_US'] || label || 'unknown')
 

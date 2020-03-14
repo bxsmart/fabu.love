@@ -92,11 +92,14 @@
       },
       sure() {
         let body = {
-          'installUrl': this.installUrl,
+          'downloadUrl': this.downloadUrl,
+          'installUrl': this.downloadUrl,
           'showOnDownloadPage': this.showinDownLoadPage,
           'changelog': this.updataContent,
           'updateMode': this.updateType
         }
+
+        console.log(body)
         AppResourceApi.updateNote(getUserTeam()._id, this.appInfo._id, this.versionInfo._id, body).then((res) => {
           console.log(res)
           this.$message.success(res.message)
