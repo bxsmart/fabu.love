@@ -23,6 +23,9 @@
             <p class="versiondownload" style="display: inline-block" v-html="getDownLoadCount(this.versionInfo.downloadCount)"></p>/<span style="color: #9B9B9B;display: inline-block" v-html="getAllowDownLoadCount(this.versionInfo.strategy)"></span>
           </el-form-item>
           <el-form-item label="更新安装地址">
+            <input style="width: calc(100% - 40px)" v-model="installUrl" class="borderLine-input" type="text" v-bind:disabled="isDisabledEdit">
+          </el-form-item>
+          <el-form-item label="下载地址(ipa)" v-if="this.appInfo.platform == 'ios'">
             <input style="width: calc(100% - 40px)" v-model="downloadUrl" class="borderLine-input" type="text">
           </el-form-item>
           <el-form-item label="更新方式">
@@ -67,18 +70,28 @@
         show: false,
         updataContent: '',
         showinDownLoadPage: false,
+        installUrl: '',
         downloadUrl: '',
-        updateType: ''
+        updateType: '',
+        isDisabledEdit: false
       }
     },
     created() {
       setTimeout(() => {
-        console.log(this.versionInfo)
         this.show = true
-        this.downloadUrl = this.versionInfo.installUrl
+        this.installUrl = this.versionInfo.installUrl
+        this.downloadUrl = this.versionInfo.downloadUrl
+
+        if (this.appInfo.platform === 'ios') {
+            this.isDisabledEdit = true
+        } else {
+            this.isDisabledEdit = false
+        }
+
         if (this.versionInfo.changelog) {
           this.updataContent = this.versionInfo.changelog
         }
+
         this.updateType = this.versionInfo.updateMode
         this.showinDownLoadPage = this.versionInfo.showOnDownloadPage
       }, 200)
@@ -91,9 +104,13 @@
         }, 500)
       },
       sure() {
+        if (this.appInfo.platform === 'android') {
+          this.downloadUrl = this.installUrl
+        }
+
         let body = {
+          'installUrl': this.installUrl,
           'downloadUrl': this.downloadUrl,
-          'installUrl': this.downloadUrl,
           'showOnDownloadPage': this.showinDownLoadPage,
           'changelog': this.updataContent,
           'updateMode': this.updateType
@@ -233,3 +250,4 @@
     margin-left: calc(100% - 40px - 96px - 96px - 10px);
   }
 </style>
+
